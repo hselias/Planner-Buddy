@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block body%}
+
+<div class="p-4">
+    <div class="col-lg-5 shadow mx-auto p-0" style="background-color: rgb(184, 225, 239); border-radius: 0.5rem;">
+        <div class="alert alert-success"><h1>Signup for Account</h1></div>
+        <div class="p-4">
+            <form method="post" action="/signup/">
+                {% csrf_token %}
+                {{form.as_p}}
+                <hr>
+                <input class="btn btn-success" type="submit" value="Sign Up">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body%}

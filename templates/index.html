@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block body%}
+<div>
+  <div class="container pt-4">
+    <div class="row p-0 mt-4">
+      <div class="col-lg-4 mx-auto shadow p-0">
+        <div class="alert alert-info">
+          <h2 class="ms-auto">Add New Todo</h2>
+        </div>
+        <div class="p-4">
+          <form method="POST" action="/add/">
+            {% csrf_token %}
+            {{form.as_p}}
+            <hr>
+            <input type="submit" value="ADD" class="btn btn-info">
+          </form>
+        </div>
+      </div>
+
+
+
+      <div class="col">
+        <div class="border">
+          {% if todos|length == 0 %}
+
+          <div class="p-4">
+            <br>
+            <br>
+            <div class="alert alert-info">
+              <p class="" style="font-size: 30px">NO TODOS</p>
+            </div>
+            <br>
+            <br>
+          </div>
+
+          {% else %}
+
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for todo in todos%}
+                <tr>
+
+                  <td>{{forloop.counter}}</td>
+                  <td>{{todo.title}}</td>
+                  <td>
+                    {% if todo.status == 'C'  %}
+                    <a href="/change-status/{{todo.id}}/P" class="" title="Completed / Mark pending">✅</a>
+                    {% else %}
+                    <a href="/change-status/{{todo.id}}/C" class="" title="Pending / Mark Completed">⏲️</a>
+                    {% endif %}
+                  </td>
+                  <td>{{todo.priority}}</td>
+                  <td>
+                    <a href="/delete/{{todo.id}}" class="btn btn-danger">Delete</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body%}
